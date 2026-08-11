@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html class="h-full" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>CRM Suite - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class'
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1" rel="stylesheet"/>
+    <!-- Librería Chart.js para las gráficas -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="h-full bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans flex overflow-hidden transition-colors">
+    <!-- Sidebar / Menú Lateral -->
+    <aside class="hidden md:flex flex-col fixed left-0 top-0 bottom-0 z-40 w-64 bg-slate-900 text-white border-r border-slate-800">
+        <div class="p-4 border-b border-slate-800 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white">AD</div>
+            <div>
+                <h2 class="text-sm font-bold">Admin CRM</h2>
+                <p class="text-xs text-slate-400">Empresarial</p>
+            </div>
+        </div>
+        <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+            <a class="flex items-center gap-3 bg-blue-600 text-white px-3 py-2 rounded-lg font-semibold text-sm" href="dashboard.html">
+                <span class="material-symbols-outlined">dashboard</span> Dashboard
+            </a>
+            <a class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-3 py-2 rounded-lg text-sm" href="clientes.html">
+                <span class="material-symbols-outlined">groups</span> Clientes
+            </a>
+            <a class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-3 py-2 rounded-lg text-sm" href="contactos.html">
+                <span class="material-symbols-outlined">contact_page</span> Contactos
+            </a>
+            <a class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-3 py-2 rounded-lg text-sm" href="ventas.html">
+                <span class="material-symbols-outlined">monetization_on</span> Oportunidades
+            </a>
+            <a class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-3 py-2 rounded-lg text-sm" href="productos.html">
+                <span class="material-symbols-outlined">inventory_2</span> Catálogo
+            </a>
+            <a class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-3 py-2 rounded-lg text-sm" href="cotizaciones.html">
+                <span class="material-symbols-outlined">request_quote</span> Cotizaciones
+            </a>
+            <a class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-3 py-2 rounded-lg text-sm" href="tareas.html">
+                <span class="material-symbols-outlined">assignment</span> Tareas
+            </a>
+            <a class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-3 py-2 rounded-lg text-sm" href="usuarios.html">
+                <span class="material-symbols-outlined">person</span> Usuarios y Roles
+            </a>
+            <a class="flex items-center gap-3 text-slate-300 hover:bg-slate-800 px-3 py-2 rounded-lg text-sm" href="reportes.html">
+                <span class="material-symbols-outlined">assessment</span> Reportes
+            </a>
+        </nav>
+        <div class="p-3 border-t border-slate-800">
+            <a class="flex items-center gap-3 text-red-400 hover:bg-slate-800 px-3 py-2 rounded-lg text-sm" href="../index.html">
+                <span class="material-symbols-outlined">logout</span> Cerrar Sesión
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col md:ml-64 h-full overflow-hidden">
+        <header class="sticky top-0 z-30 flex justify-between items-center px-6 py-3 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 transition-colors">
+            <h1 class="text-xl font-bold text-slate-900 dark:text-white">Panel Principal</h1>
+            
+            <div class="flex items-center gap-3">
+                <!-- Botón Interruptor Modo Oscuro / Claro -->
+                <button id="btn-toggle-theme" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors" title="Cambiar Tema">
+                    <span class="material-symbols-outlined text-base dark:hidden">dark_mode</span>
+                    <span class="material-symbols-outlined text-base hidden dark:inline">light_mode</span>
+                </button>
+
+                <span class="text-sm font-semibold text-slate-600 dark:text-slate-300 hidden sm:inline">Bienvenido, Admin</span>
+                <a href="../index.html" class="p-2 text-slate-500 hover:text-red-600 dark:text-slate-400 dark:hover:text-red-400 rounded-full hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" title="Cerrar sesión">
+                    <span class="material-symbols-outlined">logout</span>
+                </a>
+            </div>
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-6 bg-slate-50 dark:bg-slate-900 transition-colors">
+            <div class="max-w-7xl mx-auto space-y-6">
+                <!-- KPIs Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-4 shadow-sm">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase text-slate-500 dark:text-slate-400">Ingresos Totales</span>
+                            <span class="material-symbols-outlined text-blue-600 bg-blue-50 dark:bg-blue-900/30 p-2 rounded-lg">account_balance_wallet</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white" id="kpi-revenue">$0 MXN</h3>
+                        <p class="text-xs text-emerald-600 dark:text-emerald-400 font-semibold mt-2">Calculado de Firestore</p>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-4 shadow-sm">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase text-slate-500 dark:text-slate-400">Oportunidades</span>
+                            <span class="material-symbols-outlined text-blue-600 bg-blue-50 dark:bg-blue-900/30 p-2 rounded-lg">lightbulb</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white" id="kpi-deals">0</h3>
+                        <p class="text-xs text-emerald-600 dark:text-emerald-400 font-semibold mt-2">En proceso de venta</p>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-4 shadow-sm">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase text-slate-500 dark:text-slate-400">Clientes Activos</span>
+                            <span class="material-symbols-outlined text-blue-600 bg-blue-50 dark:bg-blue-900/30 p-2 rounded-lg">business</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white" id="kpi-clients">0</h3>
+                        <p class="text-xs text-emerald-600 dark:text-emerald-400 font-semibold mt-2">Registrados en sistema</p>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-4 shadow-sm">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase text-slate-500 dark:text-slate-400">Tareas Pendientes</span>
+                            <span class="material-symbols-outlined text-amber-600 bg-amber-50 dark:bg-amber-900/30 p-2 rounded-lg">task_alt</span>
+                        </div>
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white" id="kpi-tasks">12</h3>
+                        <p class="text-xs text-amber-600 dark:text-amber-400 font-semibold mt-2">Atención requerida</p>
+                    </div>
+                </div>
+
+                <!-- Gráfica de Barras Dinámica -->
+                <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-6 shadow-sm">
+                    <h2 class="text-base font-bold text-slate-900 dark:text-white mb-4">Rendimiento Mensual de Ventas ($ MXN)</h2>
+                    <div class="h-64">
+                        <canvas id="dashboardBarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts de integración -->
+    <script type="module" src="../js/firebase-config.js"></script>
+    <script type="module" src="../js/app.js"></script>
+    <script type="module" src="../js/dashboard.js"></script>
+</body>
+</html>

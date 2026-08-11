@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html class="h-full" lang="es">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>CRM Suite - Reportes y Estadísticas</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            900: '#4c1d95',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="h-full bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans flex overflow-hidden transition-colors">
+    <!-- Sidebar Morado / Púrpura -->
+    <aside class="hidden md:flex flex-col fixed left-0 top-0 bottom-0 z-40 w-64 bg-slate-950 text-white border-r border-purple-900/40">
+        <div class="p-4 border-b border-purple-900/30 flex items-center gap-3 bg-purple-950/40">
+            <div class="w-10 h-10 rounded-xl bg-violet-600 flex items-center justify-center font-bold text-white shadow-lg shadow-violet-600/30">CRM</div>
+            <div>
+                <h2 class="text-sm font-bold text-violet-200">CRM Suite</h2>
+                <p class="text-xs text-violet-400">Panel Ejecutivo</p>
+            </div>
+        </div>
+        <nav class="flex-1 px-3 py-4 space-y-1 overflow-y-auto">
+            <a class="flex items-center gap-3 text-slate-300 hover:bg-violet-900/30 px-3 py-2 rounded-lg text-sm" href="dashboard.html">
+                <span class="material-symbols-outlined text-violet-400">dashboard</span> Dashboard
+            </a>
+            <a class="flex items-center gap-3 text-slate-300 hover:bg-violet-900/30 px-3 py-2 rounded-lg text-sm" href="clientes.html">
+                <span class="material-symbols-outlined text-violet-400">groups</span> Clientes
+            </a>
+            <a class="flex items-center gap-3 text-slate-300 hover:bg-violet-900/30 px-3 py-2 rounded-lg text-sm" href="contactos.html">
+                <span class="material-symbols-outlined text-violet-400">contact_page</span> Contactos
+            </a>
+            <a class="flex items-center gap-3 text-slate-300 hover:bg-violet-900/30 px-3 py-2 rounded-lg text-sm" href="ventas.html">
+                <span class="material-symbols-outlined text-violet-400">monetization_on</span> Oportunidades
+            </a>
+            <a class="flex items-center gap-3 text-slate-300 hover:bg-violet-900/30 px-3 py-2 rounded-lg text-sm" href="productos.html">
+                <span class="material-symbols-outlined text-violet-400">inventory_2</span> Catálogo
+            </a>
+            <a class="flex items-center gap-3 text-slate-300 hover:bg-violet-900/30 px-3 py-2 rounded-lg text-sm" href="cotizaciones.html">
+                <span class="material-symbols-outlined text-violet-400">request_quote</span> Cotizaciones
+            </a>
+            <a class="flex items-center gap-3 text-slate-300 hover:bg-violet-900/30 px-3 py-2 rounded-lg text-sm" href="tareas.html">
+                <span class="material-symbols-outlined text-violet-400">assignment</span> Tareas
+            </a>
+            <a class="flex items-center gap-3 text-slate-300 hover:bg-violet-900/30 px-3 py-2 rounded-lg text-sm" href="usuarios.html">
+                <span class="material-symbols-outlined text-violet-400">person</span> Usuarios y Roles
+            </a>
+            <a class="flex items-center gap-3 bg-violet-700 text-white px-3 py-2 rounded-lg font-semibold text-sm shadow-md shadow-violet-700/20" href="reportes.html">
+                <span class="material-symbols-outlined">assessment</span> Reportes
+            </a>
+        </nav>
+        <div class="p-3 border-t border-purple-900/30">
+            <a class="flex items-center gap-3 text-red-400 hover:bg-red-950/30 px-3 py-2 rounded-lg text-sm transition-colors" href="../index.html">
+                <span class="material-symbols-outlined">logout</span> Cerrar Sesión
+            </a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="flex-1 flex flex-col md:ml-64 h-full overflow-hidden">
+        <header class="sticky top-0 z-30 flex justify-between items-center px-6 py-3 bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700">
+            <h1 class="text-xl font-bold text-slate-900 dark:text-white">Análisis y Reportes de Rendimiento</h1>
+            <div class="flex items-center gap-3">
+                <button id="btn-toggle-theme" class="p-2 rounded-lg bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600">
+                    <span class="material-symbols-outlined text-base dark:hidden">dark_mode</span>
+                    <span class="material-symbols-outlined text-base hidden dark:inline">light_mode</span>
+                </button>
+            </div>
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-6 bg-slate-50 dark:bg-slate-900">
+            <div class="max-w-7xl mx-auto space-y-6">
+                <!-- Filtro Superior -->
+                <div class="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl p-4 shadow-sm flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div>
+                        <h2 class="text-sm font-bold text-slate-800 dark:text-slate-200">Métricas de Ventas y Prospección</h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Datos sincronizados con Cloud Firestore</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <select id="filter-period" class="px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-600 dark:bg-slate-700 text-xs focus:ring-2 focus:ring-violet-600 outline-none">
+                            <option value="year">Este Año (2026)</option>
+                            <option value="q3">Tercer Trimestre</option>
+                            <option value="month">Este Mes</option>
+                        </select>
+                        <button onclick="window.print()" class="px-3 py-1.5 bg-violet-700 hover:bg-violet-800 text-white rounded-lg text-xs font-semibold flex items-center gap-1 shadow-sm">
+                            <span class="material-symbols-outlined text-sm">print</span> Exportar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tarjetas resumen KPI -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="bg-white dark:bg-slate-800 p-4 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm">
+                        <span class="text-xs font-semibold text-violet-600 dark:text-violet-400 uppercase">Tasa de Cierre</span>
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mt-1">68.4%</h3>
+                        <p class="text-xs text-emerald-600 mt-1">↑ +4.2% respecto a la meta</p>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 p-4 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm">
+                        <span class="text-xs font-semibold text-violet-600 dark:text-violet-400 uppercase">Ticket Promedio</span>
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mt-1" id="rep-avg-ticket">$0 MXN</h3>
+                        <p class="text-xs text-slate-500 mt-1">Basado en negocios ganados</p>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 p-4 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm">
+                        <span class="text-xs font-semibold text-violet-600 dark:text-violet-400 uppercase">Tiempo Promedio de Cierre</span>
+                        <h3 class="text-2xl font-bold text-slate-900 dark:text-white mt-1">14 Días</h3>
+                        <p class="text-xs text-emerald-600 mt-1">↓ 2 días más rápido</p>
+                    </div>
+                </div>
+
+                <!-- Gráficas Principales -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Tendencia de Ingresos -->
+                    <div class="bg-white dark:bg-slate-800 p-5 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm">
+                        <h3 class="font-bold text-slate-900 dark:text-white text-sm mb-4">Crecimiento Mensual de Ingresos</h3>
+                        <div class="h-64">
+                            <canvas id="chartRevenueTrend"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Distribución de Negocios por Etapa -->
+                    <div class="bg-white dark:bg-slate-800 p-5 border border-slate-200 dark:border-slate-700 rounded-xl shadow-sm">
+                        <h3 class="font-bold text-slate-900 dark:text-white text-sm mb-4">Estado del Pipeline de Ventas</h3>
+                        <div class="h-64 flex justify-center">
+                            <canvas id="chartStageDistribution"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="../js/firebase-config.js"></script>
+    <script type="module" src="../js/app.js"></script>
+    <script type="module" src="../js/reportes.js"></script>
+</body>
+</html>
