@@ -1,4 +1,4 @@
-# 🚀 CRM Suite - Sistema de Gestión de Relaciones con Clientes
+# CRM Suite - Sistema de Gestión de Relaciones con Clientes
 
 CRM Suite es una aplicación web empresarial moderna y responsiva construida con arquitectura modular en JavaScript, Tailwind CSS y backend Serverless sobre Firebase (Auth + Cloud Firestore).
 
