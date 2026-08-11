@@ -29,3 +29,17 @@ CRM Suite es una aplicación web empresarial moderna y responsiva construida con
    ```bash
    git clone [https://github.com/tu-usuario/crm-suite.git](https://github.com/tu-usuario/crm-suite.git)
    cd crm-suite
+
+2. Ejecución Local:
+
+    Abre la carpeta del proyecto en Visual Studio Code.
+
+    Haz clic derecho sobre index.html y selecciona Open with Live Server.
+
+    La aplicación correrá en http://127.0.0.1:5500/.
+
+    Credenciales de Prueba:
+
+    Usuario: ceogatito@gmail.com
+
+    Contraseña: Temporal#123
